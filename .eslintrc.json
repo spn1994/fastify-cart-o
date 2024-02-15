@@ -1,0 +1,11 @@
+//eu quem criou esse arquivo
+{
+  "extends": [
+    "@rocketseat/eslint-config/node"
+  ],
+  "Rules": {
+    "prettier/prettier": ["error", {
+      "endOfLine": "auto"
+    }]
+  }
+}

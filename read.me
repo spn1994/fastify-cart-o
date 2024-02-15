@@ -1,0 +1,16 @@
+interface User {
+  //se fosse obrigatorio , colocaria? no fim de birthyear
+  birthyear: number
+}
+
+function calcularIdade(user: User) {
+  return new Date().getFullYear() - user.birthyear
+}
+
+calcularIdade({
+  birthyear: 1986
+})
+
+//RunTime Type checking - checar se esta certo com quando executa
+
+//Static type Checking - checagem já durante criação codigo sem executar
