@@ -5,7 +5,10 @@ import { transactionsRoutes } from './routes/transaction'
 
 const app = fastify()
 //ordem do plugin é a ordem q vai executar
-app.register(transactionsRoutes)
+app.register(transactionsRoutes, {
+  //todas rotas q tiverem transaction, estão definidas por esse puglin
+  prefix: 'transactions',
+})
 
 app.listen({
   port: env.PORT,
