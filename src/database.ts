@@ -1,20 +1,17 @@
 // só renomeei a importação
-import { knex as setupKnex } from 'knex'
+import { Knex, knex as setupKnex } from 'knex'
 import { env } from './env'
 
-
-//console.log(process.env)
-
-if (!process.env.DATABASE_URL) {
-  throw new Error('DATABASE_URL env not found.')
-}
-
-export const config = {
+export const config: Knex.Config = {
   client: 'sqlite',
   connection: {
     //ele executa em relação de onde está, da raiz
     filename: env.DATABASE_URL,
   },
   useNullAsDefault: true,
+  migrations: {
+    extension: 'ts',
+    directory: './db/migrations',
+  },
 }
 export const knex = setupKnex(config)
