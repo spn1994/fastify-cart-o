@@ -19,8 +19,8 @@ export async function transactionsRoutes(app: FastifyInstance) {
     const {title, amount, type } = createTransactionBodySchema.parse(
       request.body,
       )
-
-    await knex('transctions').insert({
+//knex nao consegue identificar caMpos e tabelas de forma automatica
+    await knex('transactions').insert({
       id: randomUUID(),
       title,
       amount: type === 'credit' ? amount : amount * -1,

@@ -1,0 +1,1 @@
+vai servir pra sobrescrever tipagens e tipos, informaçoes e tipo de outras bibliotecas
