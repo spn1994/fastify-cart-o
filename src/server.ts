@@ -10,6 +10,11 @@ app.register(transactionsRoutes, {
   prefix: 'transactions',
 })
 
+app.register(cookie)
+app.register(transactionsRoutes, {
+  prefix: 'transactions',
+})
+
 app.listen({
   port: env.PORT,
   //then retorna uma promisse

@@ -1,6 +1,6 @@
-//nome do arquivo vem para definiçãod e tipos, somente typescript
-// eslint-disable-next-line
+//nome do arquivo vem para definiçãod e tipos, somente typescript(dentro do arquivo) pq knex n consegue identificar
 //documentação knex tem q descrição
+// eslint-disable-next-line
 import { Knex } from 'knex'
 // ou faça apenas:
 // import 'knex'
