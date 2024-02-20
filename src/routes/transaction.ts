@@ -8,8 +8,7 @@ import { knex } from '../database'
 //request body: HTTps- criar ou editar aplicação
 
 //plugin fastfy precisa ser assincrona
-export async function transactionsRoutes(app: FastifyInstance) {
-  
+export async function transactionsRoutes(app: FastifyInstance) {  
   //rota par alistagem de todas transaçes
   app.get('/', async () => {
     const transactions = await knex('transactions').select()
@@ -40,8 +39,7 @@ export async function transactionsRoutes(app: FastifyInstance) {
       .first()
     //em knex sempre retorna array 
     return { summary }
-  })
-
+  })  
 
   app.post('/', async (request, reply) => {
     // request body { title, amounn, type: credit ou debit }
@@ -50,16 +48,29 @@ export async function transactionsRoutes(app: FastifyInstance) {
       amount: z.number(),
       type: z.enum(['credit', 'debit']),
     })
-
     //n precisa se preocupar se n passar da linha do parse
     const {title, amount, type } = createTransactionBodySchema.parse(
       request.body,
       )
+      
+      let sessionId = request.cookies.sessionId
+      //se n existir sessao, vai criar novo
+      if (!sessionId) {
+        sessionId = randomUUID()
+          // reply salva 
+        reply.setCookie('sessionId', sessionId, {
+          //quais endereço vao poder acessar
+          path: '/',
+          maxAge: 60 * 60 * 24 * 7, // 7 days duração cookie
+        })
+      }
+  
 //knex nao consegue identificar caMpos e tabelas de forma automatica
     await knex('transactions').insert({
       id: randomUUID(),
       title,
       amount: type === 'credit' ? amount : amount * -1,
+      session_id: sessionId,
     }) 
       // 201- criado com sucesso
 
