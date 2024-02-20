@@ -2,6 +2,7 @@ import { FastifyInstance } from 'fastify'
 import { z } from 'zod'
 import { randomUUID } from 'node:crypto'
 import { knex } from '../database'
+import { checkSessionIdExists } from '../middlewares/check-session-id-exists'
 
 //cookies > formas de manter contexto entre requisiçoes(coleta tudo que vc faz)
 
@@ -10,35 +11,63 @@ import { knex } from '../database'
 //plugin fastfy precisa ser assincrona
 export async function transactionsRoutes(app: FastifyInstance) {  
   //rota par alistagem de todas transaçes
-  app.get('/', async () => {
-    const transactions = await knex('transactions').select()
-    //envio como objeto, pq se eu  quiser enviar mais coisa, eu envio
+  app.get(
+    '/',
+    {//executa antes  da funçãoo q ta abaixo
+      preHandler: [checkSessionIdExists],
+    }, 
+    async (request) => {
+      const { sessionId } = request.cookies
+      const transactions = await knex('transactions')
+      .where('session_id', sessionId)
+      .select()
+    
     return { transactions }
-  })
+    },
+  )
 
   //rota de detalhe de transaação unica
-  app.get('/:id', async (request) => {
-    const getTransactionsParamsSchema = z.object({
+  app.get('/:id',
+      {//executa antes  da funçãoo q ta abaixo
+        preHandler: [checkSessionIdExists],
+      }, 
+    async (request) => {
+      const getTransactionsParamsSchema = z.object({
       id: z.string().uuid(),
     })
 
     const { id } = getTransactionsParamsSchema.parse(request.params)
     //id unico, eu espero
-    const transaction = await knex('transactions').where('id', id).first()
+    const { sessionId } = request.cookies
 
+    const transaction = await knex('transactions')
+      .where({
+        session_id: sessionId,
+        id: id,
+      })
+      
+      .first()
+    //envio como objeto, pq se eu  quiser enviar mais coisa, eu envio
     return {
       transaction
     }
   })
 
   //resumo da conta
-  app.get('/summary', async () => {
-    const summary = await knex('transactions')
-      // agrega todos valores da tabela
-      .sum('amount', { as: 'amount' })
-      .first()
+  app.get('/summary',
+      {//executa antes  da funçãoo q ta abaixo
+        preHandler: [checkSessionIdExists],
+      }, 
+      async (request) => {
+        const { sessionId } = request.cookies
+
+        const summary = await knex('transactions')
+        .where('session_id', sessionId)
+        // agrega todos valores da tabela
+        .sum('amount', { as: 'amount' })
+        .first()
     //em knex sempre retorna array 
-    return { summary }
+       return { summary }
   })  
 
   app.post('/', async (request, reply) => {
