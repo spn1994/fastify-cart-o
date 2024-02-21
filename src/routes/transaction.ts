@@ -10,6 +10,12 @@ import { checkSessionIdExists } from '../middlewares/check-session-id-exists'
 
 //plugin fastfy precisa ser assincrona
 export async function transactionsRoutes(app: FastifyInstance) {  
+  
+  //hooklobal para esse contexto, se eu quiser q funcione pra todos, eu coloco la no server.js
+  app.addHook('preHandler', async (request, reply) => {
+    //console.log(`[${request.method}] ${request.url}`)
+  })
+  
   //rota par alistagem de todas transaçes
   app.get(
     '/',
