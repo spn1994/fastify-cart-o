@@ -1,3 +1,4 @@
+//vai servir pra sobrescrever tipagens e tipos, informaçoes e tipo de outras bibliotecas//
 //nome do arquivo vem para definiçãod e tipos, somente typescript(dentro do arquivo) pq knex n consegue identificar
 //documentação knex tem q descrição
 // eslint-disable-next-line
