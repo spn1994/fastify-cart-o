@@ -14,3 +14,38 @@ calcularIdade({
 //RunTime Type checking - checar se esta certo com quando executa
 
 //Static type Checking - checagem já durante criação codigo sem executar
+
+//---------------------------//
+
+
+Vamos aprender sobre a importância de realizar testes automatizados e conceitos de testes unitários, testes de integração e testes e2e, assim como a importância da pirâmide de testes para se ter uma estratégia de testes sólida e eficiente.
+
+Uma breve explicação:
+
+Testes unitários são testes que validam o comportamento de uma única unidade de código, como uma função ou método. Eles são úteis para garantir que cada parte da aplicação esteja funcionando corretamente, sem depender de outras partes.
+
+Testes de integração são testes que validam a integração entre várias partes da aplicação, como a integração entre a camada de banco de dados e a camada de serviço. Eles são importantes para garantir que a aplicação esteja funcionando corretamente como um todo.
+
+Testes e2e (end-to-end) são testes que validam o comportamento da aplicação como um todo, simulando a interação do usuário com a aplicação. Eles são importantes para garantir que a aplicação esteja funcionando corretamente em todos os níveis, desde a camada de interface até a camada de banco de dados.
+
+A pirâmide de testes é uma estratégia que se baseia em ter mais testes unitários e menos testes de integração e e2e, pois testes unitários são mais rápidos e fáceis de escrever e manter do que outros tipos de testes.
+
+
+//--------------//
+Uma breve explicação sobre esses métodos:
+
+beforeAll
+
+É uma função que é executada uma única vez antes de todos os testes. É útil para inicializar recursos compartilhados que serão utilizados pelos testes.
+
+beforeEach
+
+É uma função que é executada antes de cada teste. É útil para preparar o ambiente antes da execução de cada teste, por exemplo, inicializar variáveis ou limpar o banco de dados.
+
+afterAll
+
+É uma função que é executada uma única vez após todos os testes terem sido executados. É útil para limpar recursos compartilhados ou fechar conexões abertas.
+
+afterEach
+
+É uma função que é executada após cada teste. É útil para limpar o ambiente depois da execução de cada teste, por exemplo, limpar variáveis ou fechar conexões com o banco de dados.
